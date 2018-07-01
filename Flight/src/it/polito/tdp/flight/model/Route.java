@@ -4,13 +4,13 @@ public class Route {
 	
 	private int routeId;
 	private Airline airline;
-	private Airport sourceAirport;
-	private Airport destinationAirport;
+	private Border sourceAirport;
+	private Border destinationAirport;
 	private String codeshare;
 	private int stops;
 	private String equipment;
 
-	public Route(int routeId, Airline airline, Airport sourceAirport, Airport destinationAirport,
+	public Route(int routeId, Airline airline, Border sourceAirport, Border destinationAirport,
 		 String codeshare, int stops, String equipment) {
 		this.routeId = routeId;
 		this.airline = airline;
@@ -37,19 +37,19 @@ public class Route {
 		this.airline = airline;
 	}
 
-	public Airport getSourceAirport() {
+	public Border getSourceAirport() {
 		return sourceAirport;
 	}
 
-	public void setSourceAirport(Airport sourceAirport) {
+	public void setSourceAirport(Border sourceAirport) {
 		this.sourceAirport = sourceAirport;
 	}
 
-	public Airport getDestinationAirport() {
+	public Border getDestinationAirport() {
 		return destinationAirport;
 	}
 
-	public void setDestinationAirport(Airport destinationAirport) {
+	public void setDestinationAirport(Border destinationAirport) {
 		this.destinationAirport = destinationAirport;
 	}
 

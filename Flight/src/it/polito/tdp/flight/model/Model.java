@@ -10,8 +10,10 @@ import org.jgrapht.Graphs;
 import org.jgrapht.alg.ConnectivityInspector;
 import org.jgrapht.alg.interfaces.ShortestPathAlgorithm;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleDirectedWeightedGraph;
+import org.jgrapht.graph.SimpleGraph;
 
 import com.javadocmd.simplelatlng.LatLng;
 import com.javadocmd.simplelatlng.LatLngTool;
@@ -19,10 +21,11 @@ import com.javadocmd.simplelatlng.util.LengthUnit;
 
 import it.polito.tdp.flight.db.FlightDAO;
 
+
 public class Model {
 
 	FlightDAO fdao = null;
-	List<Airport> airports;
+	List<Border> airports;
 	List<Airline> airlines;
 	List<Route> routes;
 
@@ -30,7 +33,8 @@ public class Model {
 	AirportIdMap airportIdMap;
 	RouteIdMap routeIdMap;
 
-	SimpleDirectedWeightedGraph<Airport, DefaultWeightedEdge> grafo;
+	SimpleDirectedWeightedGraph<Border, DefaultWeightedEdge> grafo;
+
 
 	public Model() {
 		fdao = new FlightDAO();
@@ -49,9 +53,9 @@ public class Model {
 		System.out.println(routes.size());
 	}
 
-	public List<Airport> getAirports() {
+	public List<Border> getAirports() {
 		if (this.airports == null) {
-			return new ArrayList<Airport>();
+			return new ArrayList<Border>();
 		}
 		return this.airports;
 	}
@@ -62,8 +66,8 @@ public class Model {
 		Graphs.addAllVertices(grafo, this.airports);
 		
 		for (Route r : routes) {
-			Airport sourceAirport = r.getSourceAirport();
-			Airport destinationAirport = r.getDestinationAirport();
+			Border sourceAirport = r.getSourceAirport();
+			Border destinationAirport = r.getDestinationAirport();
 			
 			if (!sourceAirport.equals(destinationAirport)) {
 				double weight = LatLngTool.distance(new LatLng(sourceAirport.getLatitude(), 
@@ -82,22 +86,22 @@ public class Model {
 			this.createGraph();
 		}
 		
-		ConnectivityInspector<Airport, DefaultWeightedEdge> ci = new ConnectivityInspector(grafo);
+		ConnectivityInspector<Border, DefaultWeightedEdge> ci = new ConnectivityInspector(grafo);
 		System.out.println(ci.connectedSets().size());
 		
 		
 	}
 	
-	public Set<Airport> getBiggestSCC() {
+	public Set<Border> getBiggestSCC() {
 		
-		ConnectivityInspector<Airport, DefaultWeightedEdge> ci = new ConnectivityInspector(grafo);
+		ConnectivityInspector<Border, DefaultWeightedEdge> ci = new ConnectivityInspector(grafo);
 		
-		Set<Airport> bestSet = null;
+		Set<Border> bestSet = null;
 		int bestSize = 0;
 		
-		for (Set<Airport> s : ci.connectedSets()) {
+		for (Set<Border> s : ci.connectedSets()) {
 			if (s.size() > bestSize) {
-				bestSet = new HashSet<Airport>(s);
+				bestSet = new HashSet<Border>(s);
 				bestSize = s.size();
 			}	
 		}
@@ -105,10 +109,10 @@ public class Model {
 		return bestSet;
 	}
 
-	public List<Airport> getShortestPath(int id1, int id2) {
+	public List<Border> getShortestPath(int id1, int id2) {
 		
-		Airport source = airportIdMap.get(id1);
-		Airport destination = airportIdMap.get(id2);
+		Border source = airportIdMap.get(id1);
+		Border destination = airportIdMap.get(id2);
 		
 		System.out.println(source);
 		System.out.println(destination);
@@ -116,12 +120,12 @@ public class Model {
 		if (source == null || destination == null) {
 			throw new RuntimeException("Gli areoporti selezionati non sono presenti in memoria");
 		}
-		
-		ShortestPathAlgorithm<Airport,DefaultWeightedEdge> spa = new DijkstraShortestPath<Airport, DefaultWeightedEdge>(grafo);
+
+		ShortestPathAlgorithm<Border,DefaultWeightedEdge> spa = new DijkstraShortestPath<Border, DefaultWeightedEdge>(grafo);
 		double weight = spa.getPathWeight(source, destination);
 		System.out.println(weight);
 		
-		GraphPath<Airport,DefaultWeightedEdge> gp = spa.getPath(source, destination);
+		GraphPath<Border,DefaultWeightedEdge> gp = spa.getPath(source, destination);
 		
 		return gp.getVertexList();
 	}

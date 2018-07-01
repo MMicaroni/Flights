@@ -3,7 +3,7 @@ package it.polito.tdp.flight.model;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Airport {
+public class Border {
 
 	private int airportId;
 	private String name;
@@ -18,7 +18,7 @@ public class Airport {
 	private String tz;
 	private List<Route> routes;
 
-	public Airport(int airportId, String name, String city, String country, String iataFaa, String icao,
+	public Border(int airportId, String name, String city, String country, String iataFaa, String icao,
 			double latitude, double longitude, float timezone, String dst, String tz) {
 		super();
 		this.airportId = airportId;
@@ -147,7 +147,7 @@ public class Airport {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Airport other = (Airport) obj;
+		Border other = (Border) obj;
 		if (airportId != other.airportId)
 			return false;
 		return true;

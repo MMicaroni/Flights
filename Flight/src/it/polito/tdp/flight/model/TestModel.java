@@ -10,19 +10,19 @@ public class TestModel {
 		
 		Model m = new Model();
 		
-		Airport a = m.getAirports().get(0);
+		Border a = m.getAirports().get(0);
 		System.out.println(a);
 		System.out.println(a.getRoutes());
 		
 		m.createGraph();
 		m.printStats();
 		
-		Set<Airport> biggestSCC = m.getBiggestSCC();
+		Set<Border> biggestSCC = m.getBiggestSCC();
 		System.out.println(biggestSCC.size());
 		
 		try {
 		
-			List<Airport> airportList = new ArrayList<Airport>(biggestSCC);
+			List<Border> airportList = new ArrayList<Border>(biggestSCC);
 			int id1 = airportList.get(0).getAirportId();
 			int id2 = airportList.get(15).getAirportId();
 		

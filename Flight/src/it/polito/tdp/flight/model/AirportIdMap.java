@@ -5,18 +5,18 @@ import java.util.Map;
 
 public class AirportIdMap {
 	
-	private Map<Integer, Airport> map;
+	private Map<Integer, Border> map;
 	
 	public AirportIdMap() {
 		map = new HashMap<>();
 	}
 	
-	public Airport get(int airportId) {
+	public Border get(int airportId) {
 		return map.get(airportId);
 	}
 	
-	public Airport get(Airport airport) {
-		Airport old = map.get(airport.getAirportId());
+	public Border get(Border airport) {
+		Border old = map.get(airport.getAirportId());
 		if (old == null) {
 			map.put(airport.getAirportId(), airport);
 			return airport;
@@ -24,7 +24,7 @@ public class AirportIdMap {
 		return old;
 	}
 	
-	public void put(Airport airport, int airportId) {
+	public void put(Border airport, int airportId) {
 		map.put(airportId, airport);
 	}
 }
